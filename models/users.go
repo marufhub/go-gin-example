@@ -29,8 +29,14 @@ func getUsers(c *gin.Context) {
 
 	if len(users) <= 0 {
 		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "No User Found!!"})
-
 	}
-
 	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": users})
+}
+
+func getUser(c *gin.Context) {
+	var user users
+	user_id = c.Param("user_id")
+	db.Where("user_id = ?", user_id).First(&user)
+
+	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": user})
 }
