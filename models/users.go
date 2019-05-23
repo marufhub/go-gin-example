@@ -17,12 +17,8 @@ type (
 	}
 )
 
-func init() {
-	db := db.GetDB()
-	db.AutoMigrate(&users{})
-}
-
-func getUsers(c *gin.Context) {
+// GetUsers return the list of all users
+func GetUsers(c *gin.Context) {
 	var users []users
 	db := db.GetDB()
 	db.Find(&users)
@@ -33,7 +29,8 @@ func getUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": users})
 }
 
-func getUser(c *gin.Context) {
+// GetUser returns a user for the user_id
+func GetUser(c *gin.Context) {
 	var user users
 	db := db.GetDB()
 	UserID := c.Param("user_id")

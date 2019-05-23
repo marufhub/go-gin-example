@@ -9,12 +9,10 @@ var db *gorm.DB
 
 func init() {
 	var err error
-	db, err = gorm.Open("postgres", "host=localhost port=5432 user=postgres dbname=postgres password=postgres")
+	db, err = gorm.Open("postgres", "host=localhost port=5432 user=postgres dbname=postgres password=postgres sslmode=disable")
 	if err != nil {
-		panic("failed to connect database")
+		panic(err.Error)
 	}
-	//Migrate the schema
-	// db.AutoMigrate(&todoModel{})
 }
 
 // GetDB Return db

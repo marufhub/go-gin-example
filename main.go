@@ -10,8 +10,8 @@ func main() {
 	r := gin.Default()
 	v1 := r.Group("/api/users")
 	{
-		v1.GET("/", models.getUsers)
-		v1.GET("/:user_id", models.getUser)
+		v1.GET("/", models.GetUsers)
+		v1.GET("/:user_id", models.GetUser)
 	}
 	r.Run()
 }
