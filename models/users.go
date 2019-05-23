@@ -35,8 +35,9 @@ func getUsers(c *gin.Context) {
 
 func getUser(c *gin.Context) {
 	var user users
-	user_id = c.Param("user_id")
-	db.Where("user_id = ?", user_id).First(&user)
+	db := db.GetDB()
+	UserID := c.Param("user_id")
+	db.Where("user_id = ?", UserID).First(&user)
 
 	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": user})
 }
