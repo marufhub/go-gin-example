@@ -1,27 +1,24 @@
-package models
+package handler
 
 import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-	"github.com/marufhub/go-gin-example/db"
+	"github.com/marufhub/go-gin-example/usecase"
 )
 
-type (
-	users struct {
-		gorm.Model
-		UserID   int    `json:"user_id"`
-		UserName string `json:"user_name"`
-	}
-)
+// Handle user request
+// validate the request
+// check basic authentication middleware
+// call the usecase - function to data access
+// transform the response to specific format using base handlers
+// response error or successfull result.
 
 // GetUsers return the list of all users
 func GetUsers(c *gin.Context) {
-	var users []users
-	db := db.GetDB()
-	db.Find(&users)
+
+	users, err := usecase.GetUsers()
 
 	if len(users) <= 0 {
 		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "No User Found!!"})
@@ -31,10 +28,8 @@ func GetUsers(c *gin.Context) {
 
 // GetUser returns a user for the user_id
 func GetUser(c *gin.Context) {
-	var user users
-	db := db.GetDB()
-	UserID := c.Param("user_id")
-	db.Where("user_id = ?", UserID).First(&user)
+	userID := c.Param(user_id)
+	user, err := usecase.GetUser(userID)
 
 	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": user})
 }
