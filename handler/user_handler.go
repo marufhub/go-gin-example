@@ -28,7 +28,7 @@ func GetUsers(c *gin.Context) {
 
 // GetUser returns a user for the user_id
 func GetUser(c *gin.Context) {
-	userID := c.Param(user_id)
+	userID := c.Param("user_id")
 	user := usecase.GetUser(userID)
 
 	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": user})
