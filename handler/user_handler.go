@@ -18,7 +18,7 @@ import (
 // GetUsers return the list of all users
 func GetUsers(c *gin.Context) {
 
-	users, err := usecase.GetUsers()
+	users := usecase.GetUsers()
 
 	if len(users) <= 0 {
 		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "No User Found!!"})
@@ -29,7 +29,7 @@ func GetUsers(c *gin.Context) {
 // GetUser returns a user for the user_id
 func GetUser(c *gin.Context) {
 	userID := c.Param(user_id)
-	user, err := usecase.GetUser(userID)
+	user := usecase.GetUser(userID)
 
 	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": user})
 }

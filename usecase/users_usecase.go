@@ -7,20 +7,20 @@ import (
 )
 
 // GetUsers return the list of all users
-func GetUsers() ([]model.User, error) {
+func GetUsers() []model.User {
 	var users []model.User
 	db := db.GetDB()
 	db.Find(&users)
 
-	return users, nil
+	return users
 
 }
 
 // GetUser returns a user for the user_id
-func GetUser(userID string) (model.User, error) {
+func GetUser(userID string) model.User {
 	var user model.User
 	db := db.GetDB()
 	db.Where("user_id = ?", userID).First(&user)
 
-	return user, nil
+	return user
 }
