@@ -2,10 +2,10 @@ package handler
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
-	"github.com/marufhub/go-gin-example/usecase"
+	"github.com/marufhub/go-gin-example/models"
 )
 
 // Handle user request
@@ -18,7 +18,7 @@ import (
 // GetUsers return the list of all users
 func GetUsers(c *gin.Context) {
 
-	users := usecase.GetUsers()
+	users := models.GetAllUsers()
 
 	if len(users) <= 0 {
 		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "No User Found!!"})
@@ -26,10 +26,9 @@ func GetUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": users})
 }
 
-// GetUser returns a user for the user_id
+//GetUser returns a user for the user_id
 func GetUser(c *gin.Context) {
-	userID := c.Param("user_id")
-	user := usecase.GetUser(userID)
-
+	userID, _ := strconv.ParseInt(c.Param("id"), 10, 32)
+	user := models.GetUserByID(userID)
 	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": user})
 }

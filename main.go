@@ -14,7 +14,7 @@ func main() {
 	api := r.Group("/api/users")
 	{
 		api.GET("/", handler.GetUsers)
-		api.GET("/:user_id", handler.GetUser)
+		api.GET("/:id", handler.GetUser)
 	}
 
 	authorized := r.Group("/", gin.BasicAuth(gin.Accounts{
