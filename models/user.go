@@ -1,8 +1,7 @@
-package model
+package models
 
 import (
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 type (
@@ -14,24 +13,19 @@ type (
 	}
 )
 
-// // GetUsers return the list of all users
-// func GetUsers(c *gin.Context) {
-// 	var users []users
-// 	db := db.GetDB()
-// 	db.Find(&users)
+// GetAllUsers return the list of all users
+func GetAllUsers() []*User {
+	list := []*User{}
+	GetDB().Find(&list)
 
-// 	if len(users) <= 0 {
-// 		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "No User Found!!"})
-// 	}
-// 	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": users})
-// }
+	return list
+}
 
-// // GetUser returns a user for the user_id
-// func GetUser(c *gin.Context) {
-// 	var user users
-// 	db := db.GetDB()
-// 	UserID := c.Param("user_id")
-// 	db.Where("user_id = ?", UserID).First(&user)
-
-// 	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": user})
-// }
+// GetUserByID return a user by id
+func GetUserByID(id int64) *User {
+	user := &User{}
+	if GetDB().Where("user_id = ?", id).First(user); user.UserID > 0 {
+		return user
+	}
+	return nil
+}
